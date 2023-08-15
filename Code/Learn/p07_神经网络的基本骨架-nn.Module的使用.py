@@ -27,17 +27,18 @@ for data in dataloader:
     imgs, targets = data
     output = module(imgs)
     print(output.shape)
-    writer.add_images("input", imgs, step)
+    writer.add_images("ConvInput", imgs, step)
 
+    '''
+    由于卷积层设置的输出是6个通道，tensorboard无法显示这样的数据，需要将其转换为3通道的数据，batch_size设置为-1
+    自动根据数据计算
+    '''
     output = torch.reshape(output, (-1, 3, 30, 30))
-    writer.add_images("output", output, step)
+    writer.add_images("ConvOutput", output, step)
     step += 1
 
 writer.close()
 
-class MyModule(nn.Module):
-    def __init__(self):
-        super(MyModule, self).__init__()
 
 
 
